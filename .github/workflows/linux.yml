@@ -27,7 +27,7 @@ jobs:
           ./build_deps.sh
           cd ../build
           pwd
-          cmake .. -DWITH_NVML=OFF -DWITH_CUDA=OFF -DWITH_OPENCL=OFF -DWITH_OPENCL=OFF 
+          cmake .. -DWITH_NVML=OFF -DWITH_CUDA=OFF -DWITH_OPENCL=OFF -DWITH_OPENCL=OFF -DWITH_HWLOC=OFF
           make -j$(nproc) 
           tar cfz xmrig.tar.gz xmrig
           pwd
