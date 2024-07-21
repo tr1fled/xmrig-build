@@ -18,23 +18,21 @@ jobs:
       - name: Build project on Ubuntu
         run: |
           yes | apt update
-          apt install -y git build-essential cmake automake libtool autoconf wget 
+          apt install -y build-essential cmake automake libtool autoconf wget
           echo "XMRIG_VERSION="`cat src/version.h | grep -Eo "APP_VERSION\s+\"(.+?)\"" | awk -F "\"" '{print $2}'` >> $GITHUB_ENV
           sed -i 's/DonateLevel = 1/DonateLevel = 0/g' src/donate.h
           
       - name: do some goofy spets
         run: |
-           mkdir build 
-           cd scripts
-           pwd
-           ./build_deps.sh
-           cd ../build
-           pwd
-           cmake .. -DWITH_NVML=OFF -DWITH_CUDA=OFF -DWITH_OPENCL=OFF -DWITH_OPENCL=OFF -DXMRIG_DEPS=../scripts/deps
-           make -j$(nproc) 
-           tar cfz xmrig.tar.gz xmrig
-           pwd
-           ls -l
+          apt install git build-essential cmake automake libtool autoconf
+          git clone https://github.com/xmrig/xmrig.git
+          mkdir xmrig/build && cd xmrig/scripts
+          ./build_deps.sh && cd ../build
+          cmake .. -DXMRIG_DEPS=scripts/deps
+          make -j$(nproc)
+          tar cfz xmrig.tar.gz xmrig
+          pwd
+          ls -l
            
       - name: Upload Ubuntu build artifacts
         uses: actions/upload-artifact@v4
