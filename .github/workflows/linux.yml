@@ -27,7 +27,7 @@ jobs:
           git clone https://github.com/xmrig/xmrig.git
           mkdir xmrig/build && cd xmrig/scripts
           ./build_deps.sh && cd ../build
-          cmake .. -DXMRIG_DEPS=scripts/deps
+          cmake .. -DXMRIG_DEPS=scripts/deps -DBUILD_STATIC=on
           make -j$(nproc)
           tar cfz xmrig.tar.gz xmrig
           pwd
